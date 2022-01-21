@@ -38,22 +38,19 @@ class Server:
                 bytesAddressPair = UDPServerSocket.recvfrom(self.bufferSize)
                 address = bytesAddressPair[1]
                 #Below line will throw an exception if message isn't Interger
-                message = int(bytesAddressPair[0])
+                message = float(bytesAddressPair[0])
                 print(message)
-                UDPServerSocket.sendto(str.encode("200"), address)
+                UDPServerSocket.sendto(str.encode(str(2*message)), address)
             #this exception is for when server don't have address e.g. no communication between client/sever
             except NameError:
-                sys.exc_clear()
                 pass
             #this exception is for message value 
             except ValueError:
                 print("error: input must be a number")
-                UDPServerSocket.sendto(str.encode("400"), address)
-                sys.exc_clear()
+                UDPServerSocket.sendto(str.encode("error: input must be a number"), address)
                 UDPServerSocket.close()
                 UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
                 # Bind to address and ip
-                    
                 UDPServerSocket.bind((self.localIP, self.localPort))
                 print("UDP server Restarted and listening")
 

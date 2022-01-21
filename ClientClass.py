@@ -26,14 +26,14 @@ class Client:
         UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         try:
             UDPClientSocket.settimeout(5.0)
+            
             UDPClientSocket.sendto(bytesToSend, (self.serverAddress,self.portNumber))
             
             msgFromServer = UDPClientSocket.recvfrom(self.bufferSize)[0]
-            print("Message from Server " +msgFromServer)
+            print("Message from Server " +(msgFromServer).decode('utf-8'))
             
         except:
             print("error: Server is not started")
-            sys.exc_clear()
         
         
         
